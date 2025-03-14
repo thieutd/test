@@ -7,10 +7,12 @@ on:
     branches: [ "main" ]
     paths:
       - 'Server/**'
+      - '.github/workflows/**'
   pull_request:
     branches: [ "main" ]
     paths:
       - 'Server/**'
+      - '.github/workflows/**'
 
 jobs:
   build:
