@@ -1,0 +1,139 @@
+{
+  "version": 8,
+  "configurePresets": [
+    {
+      "name": "vcpkg-ninja-base",
+      "hidden": true,
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}"
+      }
+    },
+    {
+      "name": "windows-x64-msvc-base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl.exe",
+        "CMAKE_CXX_COMPILER": "cl.exe"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "linux-x64-gcc-base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "/usr/bin/gcc",
+        "CMAKE_CXX_COMPILER": "/usr/bin/g++"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "windows-msvc-shared",
+      "displayName": "Windows x64 MSVC Shared",
+      "inherits": [
+        "vcpkg-ninja-base",
+        "windows-x64-msvc-base"
+      ],
+      "cacheVariables": {
+        "BUILD_SHARED_LIBS": "ON",
+        "VCPKG_TARGET_TRIPLET": "x64-windows"
+      }
+    },
+    {
+      "name": "windows-msvc-static",
+      "displayName": "Windows x64 MSVC Static",
+      "inherits": [
+        "vcpkg-ninja-base",
+        "windows-x64-msvc-base"
+      ],
+      "cacheVariables": {
+        "BUILD_SHARED_LIBS": "OFF",
+        "VCPKG_TARGET_TRIPLET": "x64-windows-static-md"
+      }
+    },
+    {
+      "name": "linux-gcc-static",
+      "displayName": "Linux x64 GCC Static",
+      "inherits": [
+        "vcpkg-ninja-base",
+        "linux-x64-gcc-base"
+      ],
+      "cacheVariables": {
+        "BUILD_SHARED_LIBS": "OFF",
+        "VCPKG_TARGET_TRIPLET": "x64-linux"
+      }
+    },
+    {
+      "name": "linux-gcc-shared",
+      "displayName": "Linux x64 GCC Shared",
+      "inherits": [
+        "vcpkg-ninja-base",
+        "linux-x64-gcc-base"
+      ],
+      "cacheVariables": {
+        "BUILD_SHARED_LIBS": "ON",
+        "VCPKG_TARGET_TRIPLET": "x64-linux-dynamic"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "windows-msvc-shared-debug",
+      "configurePreset": "windows-msvc-shared",
+      "displayName": "Windows x64 MSVC Shared Debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "windows-msvc-shared-release",
+      "configurePreset": "windows-msvc-shared",
+      "displayName": "Windows x64 MSVC Shared Release",
+      "configuration": "RelWithDebInfo"
+    },
+    {
+      "name": "windows-msvc-static-debug",
+      "configurePreset": "windows-msvc-static",
+      "displayName": "Windows x64 MSVC Static Debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "windows-msvc-static-release",
+      "configurePreset": "windows-msvc-static",
+      "displayName": "Windows x64 MSVC Static Release",
+      "configuration": "RelWithDebInfo"
+    },
+    {
+      "name": "linux-gcc-static-debug",
+      "configurePreset": "linux-gcc-static",
+      "displayName": "Linux x64 GCC Static Debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "linux-gcc-static-release",
+      "configurePreset": "linux-gcc-static",
+      "displayName": "Linux x64 GCC Static Release",
+      "configuration": "RelWithDebInfo"
+    },
+    {
+      "name": "linux-gcc-shared-debug",
+      "configurePreset": "linux-gcc-shared",
+      "displayName": "Linux x64 GCC Shared Debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "linux-gcc-shared-release",
+      "configurePreset": "linux-gcc-shared",
+      "displayName": "Linux x64 GCC Shared Release",
+      "configuration": "RelWithDebInfo"
+    }
+  ]
+}

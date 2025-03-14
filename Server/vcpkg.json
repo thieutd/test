@@ -1,0 +1,16 @@
+{
+  "dependencies": [
+    "botan",
+    {
+      "name": "drogon",
+      "features": [
+        "ctl",
+        "postgres",
+        "redis"
+      ]
+    },
+    "fmt",
+    "jwt-cpp",
+    "libassert"
+  ]
+}

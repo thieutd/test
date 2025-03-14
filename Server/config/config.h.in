@@ -1,0 +1,11 @@
+#pragma once
+
+#include <string_view>
+
+namespace server::constants{
+    constexpr std::string_view kName{"@PROJECT_NAME@"};
+    constexpr std::string_view kVersion{"v@PROJECT_VERSION@"};
+    constexpr int kVersionMajor{ @PROJECT_VERSION_MAJOR@ };
+    constexpr int kVersionMinor{ @PROJECT_VERSION_MINOR@ };
+    constexpr int kVersionPatch{ @PROJECT_VERSION_PATCH@ };
+} // namespace server::constants
