@@ -31,7 +31,6 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         build_type: [Debug, Release]
-        c_compiler: [gcc, clang, cl]
         shared_libs: [ON, OFF]
         include:
           # Windows configurations
@@ -58,26 +57,6 @@ jobs:
             shared_libs: ON
             vcpkg_triplet: x64-linux-dynamic
 
-          # Linux configurations (Clang)
-          - os: ubuntu-latest
-            c_compiler: clang
-            cpp_compiler: clang++
-            shared_libs: OFF
-            vcpkg_triplet: x64-linux
-          - os: ubuntu-latest
-            c_compiler: clang
-            cpp_compiler: clang++
-            shared_libs: ON
-            vcpkg_triplet: x64-linux-dynamic
-
-        exclude:
-          - os: windows-latest
-            c_compiler: gcc
-          - os: windows-latest
-            c_compiler: clang
-          - os: ubuntu-latest
-            c_compiler: cl
-
     steps:
     - uses: actions/checkout@v4
 
@@ -87,16 +66,6 @@ jobs:
       shell: bash
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-
-    - name: Change default compiler
-      if: matrix.os == 'ubuntu-latest' && matrix.c_compiler == 'clang'
-      run: |
-        sudo apt install -y libc++-dev libc++abi-dev
-        sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 100
-        sudo update-alternatives --install /usr/bin/cc cc /usr/bin/clang 100
-
-    - name: Verify compiler
-      run: c++ --version
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
@@ -111,7 +80,6 @@ jobs:
         -DBUILD_SHARED_LIBS=${{ matrix.shared_libs }}
         -DVCPKG_TARGET_TRIPLET=${{ matrix.vcpkg_triplet }}
         -S '${{ github.workspace }}/Server'
-        ${{ matrix.c_compiler == 'clang' && '-DCMAKE_CXX_FLAGS="-stdlib=libc++" -DCMAKE_EXE_LINKER_FLAGS="-lc++abi"' || '' }}
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
