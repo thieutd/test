@@ -66,6 +66,11 @@ jobs:
       shell: bash
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+        echo "server-source-dir=${{ github.workspace }}/Server" >> "$GITHUB_OUTPUT"
+
+    - name: Fix permission denied during patching
+      if: runner.os == 'ubuntu-latest'
+      run: chmod +x '${{ steps.strings.outputs.server-source-dir }}/overlay-ports/botan/src/*/configure'
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
