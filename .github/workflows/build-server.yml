@@ -69,7 +69,7 @@ jobs:
         echo "server-source-dir=${{ github.workspace }}/Server" >> "$GITHUB_OUTPUT"
 
     - name: Fix permission denied during patching
-      if: runner.os == 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-latest'
       run: chmod +x '${{ steps.strings.outputs.server-source-dir }}/overlay-ports/botan/src/*/configure'
 
     - name: Configure CMake
