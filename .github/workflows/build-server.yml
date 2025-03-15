@@ -70,7 +70,7 @@ jobs:
 
     - name: Fix permission denied during patching
       if: matrix.os == 'ubuntu-latest'
-      run: chmod +x '${{ steps.strings.outputs.server-source-dir }}/overlay-ports/botan/src/*/configure'
+      run: chmod +x ${{ steps.strings.outputs.server-source-dir }}/overlay-ports/botan/configure
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
