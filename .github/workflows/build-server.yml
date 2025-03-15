@@ -88,6 +88,16 @@ jobs:
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
+    - name: Change default compiler
+      if: matrix.os == 'ubuntu-latest' && matrix.c_compiler == 'clang'
+      run: |
+        sudo apt install -y libc++-dev libc++abi-dev
+        sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 100
+        sudo update-alternatives --install /usr/bin/cc cc /usr/bin/clang 100
+
+    - name: Verify compiler
+      run: c++ --version
+
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
