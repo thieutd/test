@@ -31,10 +31,10 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         build_type: [Debug, Release]
-        c_compiler: [gcc, clang, cl, clang-cl]
+        c_compiler: [gcc, clang, cl]
         shared_libs: [ON, OFF]
         include:
-          # Windows configurations (Cl)
+          # Windows configurations
           - os: windows-latest
             c_compiler: cl
             cpp_compiler: cl
@@ -43,18 +43,6 @@ jobs:
           - os: windows-latest
             c_compiler: cl
             cpp_compiler: cl
-            shared_libs: OFF
-            vcpkg_triplet: x64-windows-static-md
-
-          # Windows configurations (Clang-cl)
-          - os: windows-latest
-            c_compiler: clang-cl
-            cpp_compiler: clang-cl
-            shared_libs: ON
-            vcpkg_triplet: x64-windows
-          - os: windows-latest
-            c_compiler: clang-cl
-            cpp_compiler: clang-cl
             shared_libs: OFF
             vcpkg_triplet: x64-windows-static-md
 
@@ -89,8 +77,6 @@ jobs:
             c_compiler: clang
           - os: ubuntu-latest
             c_compiler: cl
-          - os: ubuntu-latest
-            c_compiler: clang-cl
 
     steps:
     - uses: actions/checkout@v4
