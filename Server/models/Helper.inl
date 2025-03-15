@@ -16,7 +16,7 @@ consteval std::array<const char *, N> ClearFields(const std::array<const char *,
     auto new_fields{fields};
     for (auto &empty_field : empty_fields)
     {
-        if (auto it = std::ranges::find(new_fields, empty_field); it != new_fields.end())
+        if (auto it = std::ranges::find(new_fields, std::string_view(empty_field)); it != new_fields.end())
         {
             *it = "";
         }
@@ -36,7 +36,7 @@ consteval std::array<const char *, N> ReplaceFields(
     auto new_fields{fields};
     for (auto &[old_field, new_field] : replacements)
     {
-        if (auto it = std::ranges::find(new_fields, old_field); it != new_fields.end())
+        if (auto it = std::ranges::find(new_fields, std::string_view(old_field)); it != new_fields.end())
         {
             *it = new_field;
         }
